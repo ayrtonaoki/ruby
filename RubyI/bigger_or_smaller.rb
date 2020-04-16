@@ -33,13 +33,18 @@ end
 
 welcome
 
-secret_mumber = 22
+secret_mumber = rand(100)
 attempt_limit = 5
 numbers_tried = []
+points = 100
 
 for attempt in 1..attempt_limit do
   shot = choose_number attempt, attempt_limit, numbers_tried
   numbers_tried << shot
-
   break if check_shot(shot, secret_mumber)
+  points -= 20
 end
+
+puts "\n"
+puts "You scored " + points.to_s + " points!"
+puts "The secret number was: " + secret_mumber.to_s
