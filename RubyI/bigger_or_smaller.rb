@@ -1,4 +1,5 @@
 def welcome
+  system("clear")
   puts "   _______  ___   _______  _______  _______  ______                 "
   puts "  |  _    ||   | |       ||       ||       ||    _ |                "
   puts "  | |_|   ||   | |    ___||    ___||    ___||   | ||                "
@@ -28,14 +29,67 @@ def welcome
   puts "    |   |  |   _   ||   |___   |   |_| ||   _   || ||_|| ||   |___  "
   puts "    |___|  |__| |__||_______|  |_______||__| |__||_|   |_||_______| "
   puts "\n"
-  puts "What's your name?"
+  puts "\n"
+  puts "\n"
+  sleep 2
+  print "                       Press ENTER to start!"
+  gets
+  sleep 0.5
+  system("clear")
+  print "Enter your name: "
   name = gets
+  puts "\n"
   puts "Let's start the game, #{name}"
+  puts "\n"
 end
 
-def choose_number(attempt, attempt_limit, numbers_tried)
+def select_game_difficulty
+  puts "Select game difficulty:"
+  puts "(1) - Easy"
+  puts "(2) - Normal"
+  puts "(3) - Hard"
   puts "\n"
-  puts "Choose a number between 1 and 100 - Attempt " +
+  difficulty = gets.to_i
+  puts "\n"
+
+  loop do
+    if difficulty.between?(1, 3)
+      break
+    else
+      puts "Insert a number between 1 and 3"
+      difficulty = select_game_difficulty
+    end
+  end
+
+  case difficulty
+  when 1
+    puts "For real? Ok..."
+  when 2
+    puts "Hmm, that's gonna be interesting..."
+  when 3
+    puts "HAHA! Good luck!"
+  end
+  sleep 1
+  difficulty
+end
+
+def pick_secret_number(limit_number)
+  puts "\n"
+  puts "Picking random secret number!"
+  print "Loading ["
+  for i in 1..40
+    print "#"
+    sleep 0.1
+  end
+  print "]"
+  sleep 1
+  system("clear")
+  secret_mumber =  17 #rand(limit_number)
+end
+
+def choose_number(attempt, attempt_limit, numbers_tried, difficulty_number)
+  puts "\n"
+  puts "Choose a number between 1 and " + difficulty_number.to_s + " - Attempt " +
     "#{attempt.to_s} of  #{attempt_limit.to_s}"
   puts "Attemps so far: #{numbers_tried.to_s}"
   shot = gets
@@ -58,18 +112,50 @@ def check_shot(shot, secret_mumber)
   false
 end
 
-welcome
-
-secret_mumber = rand(100)
 attempt_limit = 5
 numbers_tried = []
-points = 100
+points = 1000
+easy_difficulty_number = 20
+normal_difficulty_number = 50
+hard_difficulty_number = 100
+
+welcome
+
+difficulty = select_game_difficulty
+
+case difficulty
+when 1
+  secret_mumber = pick_secret_number easy_difficulty_number
+when 2
+  secret_mumber = pick_secret_number normal_difficulty_number
+when 3
+  secret_mumber = pick_secret_number hard_difficulty_number
+end
 
 for attempt in 1..attempt_limit do
-  shot = choose_number attempt, attempt_limit, numbers_tried
-  numbers_tried << shot
-  break if check_shot(shot, secret_mumber)
-  points -= 20
+  case difficulty
+  when 1
+    shot = choose_number attempt, attempt_limit, numbers_tried, easy_difficulty_number
+    numbers_tried << shot
+    break if check_shot(shot, secret_mumber)
+  when 2
+    shot = choose_number attempt, attempt_limit, numbers_tried, normal_difficulty_number
+    numbers_tried << shot
+    break if check_shot(shot, secret_mumber)
+  when 3
+    shot = choose_number attempt, attempt_limit, numbers_tried, hard_difficulty_number
+    numbers_tried << shot
+    break if check_shot(shot, secret_mumber)
+  end
+
+  case difficulty
+  when 1
+    points -= 100 + (secret_mumber - shot).abs
+  when 2
+    points -= 50
+  when 3
+    points -= 10
+  end
 end
 
 puts "\n"
