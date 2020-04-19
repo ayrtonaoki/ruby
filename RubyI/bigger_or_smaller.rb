@@ -76,7 +76,9 @@ end
 def pick_secret_number(limit_number)
   puts "\n"
   puts "Picking random secret number!"
-  print "Loading ["
+  print "Loading "
+  sleep 0.5
+  print "["
   for i in 1..40
     print "#"
     sleep 0.1
@@ -84,7 +86,7 @@ def pick_secret_number(limit_number)
   print "]"
   sleep 1
   system("clear")
-  secret_mumber =  17 #rand(limit_number)
+  secret_number = rand(limit_number)
 end
 
 def choose_number(attempt, attempt_limit, numbers_tried, difficulty_number)
@@ -96,15 +98,15 @@ def choose_number(attempt, attempt_limit, numbers_tried, difficulty_number)
   shot.to_i
 end
 
-def check_shot(shot, secret_mumber)
+def check_shot(shot, secret_number)
   puts "\n"
-  if shot == secret_mumber
+  if shot == secret_number
     puts "Hit :)"
     return true
   end
 
   puts "Miss :("
-  if secret_mumber > shot
+  if secret_number > shot
     puts "The secret number is bigger!"
   else
     puts "The secret number is smaller!"
@@ -112,52 +114,65 @@ def check_shot(shot, secret_mumber)
   false
 end
 
+def play_game(attempt_limit, difficulty, difficulty_number, secret_number)
+  points = 1000
+  numbers_tried = []
+  for attempt in 1..attempt_limit do
+    case difficulty
+    when 1
+      shot = choose_number attempt, attempt_limit, numbers_tried, difficulty_number
+      numbers_tried << shot
+      break if check_shot(shot, secret_number)
+    when 2
+      shot = choose_number attempt, attempt_limit, numbers_tried, difficulty_number
+      numbers_tried << shot
+      break if check_shot(shot, secret_number)
+    when 3
+      shot = choose_number attempt, attempt_limit, numbers_tried, difficulty_number
+      numbers_tried << shot
+      break if check_shot(shot, secret_number)
+    end
+    case difficulty
+    when 1
+      points -= 100 + (secret_number - shot).abs
+    when 2
+      points -= 66 + (secret_number - shot).abs
+    when 3
+      points -= 33 + (secret_number - shot).abs
+    end
+  end
+  puts "\n"
+  puts "You scored " + points.to_s + " points!"
+  puts "The secret number was: " + secret_number.to_s
+end
+
+def play_again(answer)
+  answer.upcase == "Y"
+end
+
 attempt_limit = 5
-numbers_tried = []
-points = 1000
 easy_difficulty_number = 20
 normal_difficulty_number = 50
 hard_difficulty_number = 100
 
 welcome
 
-difficulty = select_game_difficulty
-
-case difficulty
-when 1
-  secret_mumber = pick_secret_number easy_difficulty_number
-when 2
-  secret_mumber = pick_secret_number normal_difficulty_number
-when 3
-  secret_mumber = pick_secret_number hard_difficulty_number
-end
-
-for attempt in 1..attempt_limit do
+loop do
+  difficulty = select_game_difficulty
   case difficulty
   when 1
-    shot = choose_number attempt, attempt_limit, numbers_tried, easy_difficulty_number
-    numbers_tried << shot
-    break if check_shot(shot, secret_mumber)
+    secret_number = pick_secret_number easy_difficulty_number
+    play_game attempt_limit, difficulty, easy_difficulty_number, secret_number
   when 2
-    shot = choose_number attempt, attempt_limit, numbers_tried, normal_difficulty_number
-    numbers_tried << shot
-    break if check_shot(shot, secret_mumber)
+    secret_number = pick_secret_number normal_difficulty_number
+    play_game attempt_limit, difficulty, normal_difficulty_number, secret_number
   when 3
-    shot = choose_number attempt, attempt_limit, numbers_tried, hard_difficulty_number
-    numbers_tried << shot
-    break if check_shot(shot, secret_mumber)
+    secret_number = pick_secret_number hard_difficulty_number
+    play_game attempt_limit, difficulty, hard_difficulty_number, secret_number
   end
-
-  case difficulty
-  when 1
-    points -= 100 + (secret_mumber - shot).abs
-  when 2
-    points -= 50
-  when 3
-    points -= 10
-  end
+  puts "\n"
+  puts "Play again? (Y/N)"
+  answer = gets.strip
+  system("clear")
+  break if answer.upcase == "N"
 end
-
-puts "\n"
-puts "You scored " + points.to_s + " points!"
-puts "The secret number was: " + secret_mumber.to_s
