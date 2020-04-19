@@ -2,5 +2,5 @@
 
 
 # About
-This repository was created for save my studies with Ruby language, following online classes, developing projects,
+This repository was created for save my studies with Ruby, following online classes, developing projects,
 training and learning more about that nice programming language 💎
