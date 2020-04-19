@@ -30,9 +30,11 @@ def welcome
   puts "    |___|  |__| |__||_______|  |_______||__| |__||_|   |_||_______| "
   puts "\n"
   puts "\n"
-  puts "\n"
   sleep 2
-  print "                       Press ENTER to start!"
+  print "                       Press ENTER to start"
+  puts "\n"
+  puts "\n"
+  puts "                              > || <"
   gets
   sleep 0.5
   system("clear")
@@ -176,3 +178,9 @@ loop do
   system("clear")
   break if answer.upcase == "N"
 end
+
+system("clear")
+  puts "Thanks for playing!"
+  puts "\n"
+  puts "      > || <"
+  sleep 3
