@@ -95,10 +95,13 @@ def choose_number(attempt, attempt_limit, numbers_tried, difficulty_number)
   puts "Choose a number between 1 and " + difficulty_number.to_s + " - Attempt " +
   "#{attempt.to_s} of  #{attempt_limit.to_s}"
   puts "Attemps so far: #{numbers_tried.to_s}"
+  puts "\n"
   shot = gets.to_i
 end
 
 def check_shot(shot, secret_number)
+  sleep 1
+  system("clear")
   puts "\n"
   if shot == secret_number
     puts "Hit :)"
@@ -128,11 +131,13 @@ def play_game(attempt_limit, difficulty, difficulty_number, secret_number)
           numbers_tried << shot
           attempt += 1
         else
+          sleep 1
           puts "Number already tried!"
           next
         end
         break if check_shot(shot, secret_number)
       else
+        sleep 1
         puts "Only numbers are accept"
         next
       end
@@ -143,11 +148,15 @@ def play_game(attempt_limit, difficulty, difficulty_number, secret_number)
           numbers_tried << shot
           attempt += 1
         else
+          sleep 1
+          system ("clear")
           puts "Number already tried!"
           next
         end
         break if check_shot(shot, secret_number)
       else
+        sleep 1
+        system ("clear")
         puts "Only numbers are accept"
         next
       end
@@ -158,11 +167,15 @@ def play_game(attempt_limit, difficulty, difficulty_number, secret_number)
           numbers_tried << shot
           attempt += 1
         else
+          sleep 1
+          system ("clear")
           puts "Number already tried!"
           next
         end
         break if check_shot(shot, secret_number)
       else
+        sleep 1
+        system ("clear")
         puts "Only numbers are accept"
         next
       end
