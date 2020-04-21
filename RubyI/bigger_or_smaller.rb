@@ -31,10 +31,9 @@ def welcome
   puts "\n"
   puts "\n"
   sleep 2
+  puts "\n"
+  puts "\n"
   print "                       Press ENTER to start"
-  puts "\n"
-  puts "\n"
-  puts "                              > || <"
   gets
   sleep 0.5
   system("clear")
@@ -181,6 +180,4 @@ end
 
 system("clear")
   puts "Thanks for playing!"
-  puts "\n"
-  puts "      > || <"
   sleep 3
