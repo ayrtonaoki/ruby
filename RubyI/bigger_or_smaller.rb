@@ -147,10 +147,6 @@ def play_game(attempt_limit, difficulty, difficulty_number, secret_number)
   puts "The secret number was: " + secret_number.to_s
 end
 
-def play_again(answer)
-  answer.upcase == "Y"
-end
-
 attempt_limit = 5
 easy_difficulty_number = 20
 normal_difficulty_number = 50
