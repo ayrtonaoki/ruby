@@ -44,7 +44,7 @@ def welcome
   puts "\n"
 end
 
-def select_game_difficulty
+def select_game_difficulty()
   puts "Select game difficulty:"
   puts "(1) - Easy"
   puts "(2) - Normal"
@@ -58,7 +58,7 @@ def select_game_difficulty
       break
     else
       puts "Insert a number between 1 and 3"
-      difficulty = select_game_difficulty
+      difficulty = select_game_difficulty()
     end
   end
 
@@ -93,10 +93,9 @@ end
 def choose_number(attempt, attempt_limit, numbers_tried, difficulty_number)
   puts "\n"
   puts "Choose a number between 1 and " + difficulty_number.to_s + " - Attempt " +
-    "#{attempt.to_s} of  #{attempt_limit.to_s}"
+  "#{attempt.to_s} of  #{attempt_limit.to_s}"
   puts "Attemps so far: #{numbers_tried.to_s}"
-  shot = gets
-  shot.to_i
+  shot = gets.to_i
 end
 
 def check_shot(shot, secret_number)
@@ -118,21 +117,57 @@ end
 def play_game(attempt_limit, difficulty, difficulty_number, secret_number)
   points = 1000
   numbers_tried = []
-  for attempt in 1..attempt_limit do
+  attempt = 1
+
+  while attempt <= attempt_limit do
     case difficulty
     when 1
-      shot = choose_number attempt, attempt_limit, numbers_tried, difficulty_number
-      numbers_tried << shot
-      break if check_shot(shot, secret_number)
+      shot = choose_number(attempt, attempt_limit, numbers_tried, difficulty_number)
+      if shot > 0 && shot != ""
+        if !numbers_tried.include? shot
+          numbers_tried << shot
+          attempt += 1
+        else
+          puts "Number already tried!"
+          next
+        end
+        break if check_shot(shot, secret_number)
+      else
+        puts "Only numbers are accept"
+        next
+      end
     when 2
-      shot = choose_number attempt, attempt_limit, numbers_tried, difficulty_number
-      numbers_tried << shot
-      break if check_shot(shot, secret_number)
+      shot = choose_number(attempt, attempt_limit, numbers_tried, difficulty_number)
+      if shot > 0 && shot != ""
+        if !numbers_tried.include? shot
+          numbers_tried << shot
+          attempt += 1
+        else
+          puts "Number already tried!"
+          next
+        end
+        break if check_shot(shot, secret_number)
+      else
+        puts "Only numbers are accept"
+        next
+      end
     when 3
-      shot = choose_number attempt, attempt_limit, numbers_tried, difficulty_number
-      numbers_tried << shot
-      break if check_shot(shot, secret_number)
+      shot = choose_number(attempt, attempt_limit, numbers_tried, difficulty_number)
+      if shot > 0 && shot != ""
+        if !numbers_tried.include? shot
+          numbers_tried << shot
+          attempt += 1
+        else
+          puts "Number already tried!"
+          next
+        end
+        break if check_shot(shot, secret_number)
+      else
+        puts "Only numbers are accept"
+        next
+      end
     end
+
     case difficulty
     when 1
       points -= 100 + (secret_number - shot).abs
@@ -155,17 +190,17 @@ hard_difficulty_number = 100
 welcome
 
 loop do
-  difficulty = select_game_difficulty
+  difficulty = select_game_difficulty()
   case difficulty
   when 1
-    secret_number = pick_secret_number easy_difficulty_number
-    play_game attempt_limit, difficulty, easy_difficulty_number, secret_number
+    secret_number = pick_secret_number(easy_difficulty_number)
+    play_game(attempt_limit, difficulty, easy_difficulty_number, secret_number)
   when 2
-    secret_number = pick_secret_number normal_difficulty_number
-    play_game attempt_limit, difficulty, normal_difficulty_number, secret_number
+    secret_number = pick_secret_number(normal_difficulty_number)
+    play_game(attempt_limit, difficulty, normal_difficulty_number, secret_number)
   when 3
-    secret_number = pick_secret_number hard_difficulty_number
-    play_game attempt_limit, difficulty, hard_difficulty_number, secret_number
+    secret_number = pick_secret_number(hard_difficulty_number)
+    play_game(attempt_limit, difficulty, hard_difficulty_number, secret_number)
   end
   puts "\n"
   puts "Play again? (Y/N)"
@@ -175,5 +210,5 @@ loop do
 end
 
 system("clear")
-  puts "Thanks for playing!"
-  sleep 3
+puts "Thanks for playing!"
+sleep 3
