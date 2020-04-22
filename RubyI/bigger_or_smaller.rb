@@ -117,6 +117,24 @@ def check_shot(shot, secret_number)
   false
 end
 
+def number_validation(shot, numbers_tried, attempt, secret_number)
+  if shot > 0 && shot != ""
+    if !numbers_tried.include? shot
+      numbers_tried << shot
+      attempt += 1
+    else
+      sleep 1
+      puts "Number already tried!"
+      return false
+    end
+    return check_shot(shot, secret_number)
+  else
+    sleep 1
+    puts "Only numbers are accept"
+    return false
+  end
+end
+
 def play_game(attempt_limit, difficulty, difficulty_number, secret_number)
   points = 1000
   numbers_tried = []
@@ -126,59 +144,13 @@ def play_game(attempt_limit, difficulty, difficulty_number, secret_number)
     case difficulty
     when 1
       shot = choose_number(attempt, attempt_limit, numbers_tried, difficulty_number)
-      if shot > 0 && shot != ""
-        if !numbers_tried.include? shot
-          numbers_tried << shot
-          attempt += 1
-        else
-          sleep 1
-          puts "Number already tried!"
-          next
-        end
-        break if check_shot(shot, secret_number)
-      else
-        sleep 1
-        puts "Only numbers are accept"
-        next
-      end
+      break if number_validation(shot, numbers_tried, attempt, secret_number)
     when 2
       shot = choose_number(attempt, attempt_limit, numbers_tried, difficulty_number)
-      if shot > 0 && shot != ""
-        if !numbers_tried.include? shot
-          numbers_tried << shot
-          attempt += 1
-        else
-          sleep 1
-          system ("clear")
-          puts "Number already tried!"
-          next
-        end
-        break if check_shot(shot, secret_number)
-      else
-        sleep 1
-        system ("clear")
-        puts "Only numbers are accept"
-        next
-      end
+      break if number_validation(shot, numbers_tried, attempt, secret_number)
     when 3
       shot = choose_number(attempt, attempt_limit, numbers_tried, difficulty_number)
-      if shot > 0 && shot != ""
-        if !numbers_tried.include? shot
-          numbers_tried << shot
-          attempt += 1
-        else
-          sleep 1
-          system ("clear")
-          puts "Number already tried!"
-          next
-        end
-        break if check_shot(shot, secret_number)
-      else
-        sleep 1
-        system ("clear")
-        puts "Only numbers are accept"
-        next
-      end
+      break if number_validation(shot, numbers_tried, attempt, secret_number)
     end
 
     case difficulty
