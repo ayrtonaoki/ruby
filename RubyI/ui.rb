@@ -42,6 +42,7 @@ def welcome
   puts "\n"
   puts "Let's start the game, #{name}"
   puts "\n"
+  name
 end
 
 def select_game_difficulty()
@@ -131,8 +132,12 @@ def show_play_again_message()
   answer.upcase == "N"
 end
 
-def show_by_message()
+def show_bye_message()
   system("clear")
   puts "Thanks for playing!"
   sleep 3
+end
+
+def show_rank_message()
+  puts "\nRank of players"
 end
