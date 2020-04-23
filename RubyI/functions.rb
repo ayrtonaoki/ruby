@@ -33,7 +33,16 @@ def number_validation(shot, numbers_tried, attempt, secret_number)
   end
 end
 
-def play_game(attempt_limit, difficulty, difficulty_number, secret_number)
+def save_points(name, points)
+  content = File.read("rank.txt")
+  content = content.split
+  puts content[0]
+  file = File.open("rank.txt", "a")
+  file.puts "#{points} #{name}"
+  file.close
+end
+
+def play_game(name, attempt_limit, difficulty, difficulty_number, secret_number)
   points = 1000
   numbers_tried = []
   attempt = 1
@@ -61,4 +70,11 @@ def play_game(attempt_limit, difficulty, difficulty_number, secret_number)
     end
   end
   show_result_message(points, secret_number)
+  save_points(name, points)
+end
+
+def show_rank
+  show_rank_message()
+  file = File.read("rank.txt")
+  puts file
 end
