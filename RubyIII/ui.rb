@@ -29,17 +29,30 @@ def welcome
 end
 
 def choose_map
-  puts "Choose your map:"
   for i in 1..3 do
     puts "\n(#{i})"
     puts read_map(i)
   end
   puts "\n"
+  print "Choose your map: "
   map = gets.strip
+  system("clear")
+  print "Loading "
+  sleep 0.5
+  print "["
+  for i in 1..40
+    print ":"
+    sleep 0.1
+  end
+  print "]"
+  sleep 1
+  system("clear")
+  map
 end
 
 def play_again
-  puts "Play again? (Y/N)"
+  sleep 1
+  puts "\nPlay again? (Y/N)"
   answer = gets.strip
   system "clear"
   answer.upcase == "Y"
