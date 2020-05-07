@@ -1,11 +1,10 @@
 require_relative "ui"
+require_relative "functions"
 
-welcome
+# welcome
 
 loop do
-  map_number = choose_map
   system "clear"
-  file = File.read "map#{map_number}.txt"
-  puts file.split("\n")
+  puts read_map(choose_map)
   break if !play_again
 end
