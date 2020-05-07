@@ -57,3 +57,8 @@ def play_again
   system "clear"
   answer.upcase == "Y"
 end
+
+def choose_player_movement
+  puts "Make a move! (W = Up, S = Down, A = Left and D = Right"
+  movement = gets.strip.upcase
+end
