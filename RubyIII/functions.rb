@@ -11,3 +11,16 @@ def find_player_spot(map)
     end
   end
 end
+
+def set_player_position(player_movement, player_spot)
+  case player_movement
+  when "W"
+    player_spot[0] -= 1
+  when "S"
+    player_spot[0] += 1
+  when "A"
+    player_spot[1] -= 1
+  when "D"
+    player_spot[1] += 1
+  end
+end
