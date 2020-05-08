@@ -3,7 +3,7 @@ def read_map(map_number)
   file.split("\n")
 end
 
-def find_player_spot(map)
+def find_player(map)
   map.each_with_index do |map_row, row_index|
     player_column = map_row.index "H"
     if player_column
@@ -13,6 +13,7 @@ def find_player_spot(map)
 end
 
 def set_player_position(player_movement, player_spot)
+  player_spot = player_spot.dup
   case player_movement
   when "W"
     player_spot[0] -= 1
@@ -23,4 +24,5 @@ def set_player_position(player_movement, player_spot)
   when "D"
     player_spot[1] += 1
   end
+  player_spot
 end
