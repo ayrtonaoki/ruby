@@ -26,3 +26,7 @@ def set_player_position(player_movement, player_spot)
   end
   player_spot
 end
+
+def position_is_valid?(map, new_player_position)
+  map[new_player_position[0]][new_player_position[1]] != "#"
+end
