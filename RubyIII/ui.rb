@@ -58,7 +58,7 @@ def play_again
   answer.upcase == "Y"
 end
 
-def choose_player_movement
+def player_movement
   puts "Make a move! (W = Up, S = Down, A = Left and D = Right"
   movement = gets.strip.upcase
 end
